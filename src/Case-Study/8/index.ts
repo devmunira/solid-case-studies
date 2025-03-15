@@ -36,7 +36,7 @@ class BankPayment implements IBankVerification, IPaymentProcess {
   }
 }
 
-class DigitalPayment implements IDigitalWalletVerification, IPaymentProcess {
+class DigitalPayments implements IDigitalWalletVerification, IPaymentProcess {
   payment(): void {
     console.log("Payment Process");
   }
@@ -45,4 +45,4 @@ class DigitalPayment implements IDigitalWalletVerification, IPaymentProcess {
   }
 }
 
-const payment = new DigitalPayment().verifyEmailOrPhone();
+const payment = new DigitalPayments().verifyEmailOrPhone();

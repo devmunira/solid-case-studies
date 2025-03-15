@@ -6,7 +6,7 @@
 
 // Question: How would you design interfaces for these different product types?
 
-abstract class Product {
+class Product {
   constructor(protected name: string, protected price: number) {}
 
   getName(): string {
@@ -32,17 +32,19 @@ interface ISchedulable {
   schedule(): void;
 }
 
-class PhysicalProduct extends Product implements IShippable {
+class PhysicalProduct implements IShippable {
+  private product: Product;
+
   constructor(name: string, price: number) {
-    super(name, price);
+    this.product = new Product(name, price);
   }
 
   ship(): void {
-    console.log(`${this.name} is being shipped.`);
+    console.log(`${this.product.getName()} is being shipped.`);
   }
 
   trackInventory(): void {
-    console.log(`Tracking inventory for ${this.name}.`);
+    console.log(`Tracking inventory for ${this.product.getName()}.`);
   }
 }
 
@@ -165,7 +167,7 @@ class DigitalProducts implements IProduct, IDigitalProduct {
 }
 
 // Client Code
-function main() {
+function main2() {
   const physicalProduct = new PhysicalProducts("Watch", 30.0, "Physical");
   physicalProduct.shipping();
   physicalProduct.getName();
