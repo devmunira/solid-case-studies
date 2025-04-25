@@ -4,6 +4,7 @@
     "module": "commonjs", // Use commonjs module system
     "strict": true, // Enable strict type checking
     "sourceMap": true,
+    "moduleResolution": "node",
     "esModuleInterop": true, // Ensure compatibility with CommonJS and ES modules
     "skipLibCheck": true, // Skip library checks for faster build times
     "forceConsistentCasingInFileNames": true, // Ensure consistent casing in imports
