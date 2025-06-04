@@ -1,44 +1,51 @@
 interface IOrderRepository {
-  create(dto: {}): void;
-  update(): void;
-  delete(): void;
-  getAll(): void;
-  getOne(): void;
+  create(order: Order): Promise<Order>;
+  findById(id: string): Promise<Order | null>;
+  updateStatus(id: string, status: OrderStatus): Promise<Order>;
+  findByCustomerId(customerId: string): Promise<Order[]>;
 }
 
 class SQLOrderRepository implements IOrderRepository {
-  create(dto: {}): void {
+  async create(order: Order): Promise<Order> {
     console.log("SQL Order Processing....");
+    return order;
   }
-  update(): void {
+
+  async findById(id: string): Promise<Order | null> {
     console.log("SQL Order Processing....");
+    return null;
   }
-  delete(): void {
+
+  async updateStatus(id: string, status: OrderStatus): Promise<Order> {
     console.log("SQL Order Processing....");
+    return {} as Order;
   }
-  getAll(): void {
+
+  async findByCustomerId(customerId: string): Promise<Order[]> {
     console.log("SQL Order Processing....");
-  }
-  getOne(): void {
-    console.log("SQL Order Processing....");
+    return [];
   }
 }
 
 class NOSQLOrderRepository implements IOrderRepository {
-  create(dto: {}): void {
+  async create(order: Order): Promise<Order> {
     console.log("NoSQL Order Processing....");
+    return order;
   }
-  update(): void {
+
+  async findById(id: string): Promise<Order | null> {
     console.log("NoSQL Order Processing....");
+    return null;
   }
-  delete(): void {
+
+  async updateStatus(id: string, status: OrderStatus): Promise<Order> {
     console.log("NoSQL Order Processing....");
+    return {} as Order;
   }
-  getAll(): void {
+
+  async findByCustomerId(customerId: string): Promise<Order[]> {
     console.log("NoSQL Order Processing....");
-  }
-  getOne(): void {
-    console.log("NoSQL Order Processing....");
+    return [];
   }
 }
 
@@ -49,23 +56,54 @@ class OrderService {
     this.orderRepository = orderRepository;
   }
 
-  createOrder(dto: {}): void {
-    this.orderRepository.create(dto);
+  async createOrder(order: Order): Promise<Order> {
+    return this.orderRepository.create(order);
   }
 }
 
-enum OrderRepository {
+enum OrderRepositoryType {
   SQL,
   NOSQL,
   CACHE,
 }
 
-const useRepository = OrderRepository.NOSQL;
+class RepositoryFactory {
+  static createRepository(type: OrderRepositoryType): IOrderRepository {
+    switch (type) {
+      case OrderRepositoryType.SQL:
+        return new SQLOrderRepository();
+      case OrderRepositoryType.NOSQL:
+        return new NOSQLOrderRepository();
+      case OrderRepositoryType.CACHE:
+        throw new Error("Cache repository not implemented yet");
+      default:
+        throw new Error("Invalid repository type");
+    }
+  }
+}
 
+// Example usage
+const useRepository = OrderRepositoryType.NOSQL;
 const useRepositoryForQuery: IOrderRepository =
-  useRepository === OrderRepository.NOSQL
-    ? new NOSQLOrderRepository()
-    : new SQLOrderRepository();
+  RepositoryFactory.createRepository(useRepository);
 
 const order = new OrderService(useRepositoryForQuery);
-order.createOrder({});
+const newOrder: Order = {
+  id: "1",
+  customerId: "123",
+  items: [],
+  status: OrderStatus.PENDING,
+  totalAmount: 0,
+  shippingAddress: {
+    street: "",
+    city: "",
+    state: "",
+    country: "",
+    zipCode: "",
+  },
+  paymentId: "",
+  shipmentId: "",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
+order.createOrder(newOrder);
