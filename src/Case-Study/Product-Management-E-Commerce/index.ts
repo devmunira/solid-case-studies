@@ -167,7 +167,7 @@ class DigitalProducts implements IProduct, IDigitalProduct {
 }
 
 // Client Code
-function main2() {
+function main() {
   const physicalProduct = new PhysicalProducts("Watch", 30.0, "Physical");
   physicalProduct.shipping();
   physicalProduct.getName();

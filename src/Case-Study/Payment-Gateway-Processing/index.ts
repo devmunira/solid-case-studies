@@ -56,7 +56,7 @@ class TransactionLogger {
 class FraudDetection {
   static detectFraud(transaction: Transaction) {
     if (transaction.amount > 10000) {
-      console.log("⚠️ Possible fraud detected!");
+      console.log("Possible fraud detected!");
       return true;
     }
     return false;
@@ -66,7 +66,7 @@ class FraudDetection {
 // Global Error Handler
 class GlobalErrorHandler {
   static handleError(error: Error) {
-    console.error(`❌ Error: ${error.message}`);
+    console.error(`Error: ${error.message}`);
   }
 }
 
@@ -80,7 +80,7 @@ class ResponseGenerator {
 // Report Generator
 class ReportGenerator {
   static generateReport(transactions: Transaction) {
-    console.log("📝 Generating transaction report...");
+    console.log("Generating transaction report...");
     console.table(transactions);
   }
 }
@@ -104,7 +104,7 @@ class PaymentFacade {
   static payment({ amount, paymentType }: Transaction) {
     // Simulating a payment process
     try {
-      const paymentType: Transaction["paymentType"] = "CreditCard"; // Could be user input
+      const paymentType: Transaction["paymentType"] = "CreditCard";
       const transaction = { amount: 500, paymentType: paymentType };
 
       // Step 1: Validate the transaction
