@@ -10,7 +10,7 @@
     "forceConsistentCasingInFileNames": true, // Ensure consistent casing in imports
     "outDir": "./dist", // Output directory for compiled JavaScript
     "rootDir": "./src", // Root directory for your TypeScript source files
-    "baseUrl": "./6-SOLID", // Set the base URL for module resolution
+    "baseUrl": ".",
     "paths": {
       "@src/*": ["src/*"] // Configure path aliases
     }

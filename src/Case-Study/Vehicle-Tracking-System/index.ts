@@ -46,7 +46,7 @@ abstract class AirVehicle extends Vehicle {
 // Subclass: Bike
 class Bike extends LandVehicle implements IPaddelVechicle {
   getMaxSpeed(): number {
-    return 80; // Max speed for bikes
+    return 80;
   }
 
   paddle(): string {
@@ -68,14 +68,14 @@ class scooter extends LandVehicle implements IPaddelVechicle {
 // Subclass: Car
 class Car extends LandVehicle {
   getMaxSpeed(): number {
-    return 200; // Max speed for cars
+    return 200;
   }
 }
 
 // Subclass: Airplane
 class Airplane extends AirVehicle {
   getMaxSpeed(): number {
-    return 900; // Max speed for airplanes
+    return 900;
   }
 }
 
