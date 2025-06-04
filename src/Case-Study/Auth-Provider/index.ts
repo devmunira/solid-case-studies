@@ -50,7 +50,6 @@ class LocalAuthProvider implements IAuthProvider {
   }
 
   async validateToken(token: string): Promise<IAuthResult> {
-    // In a real implementation, we would validate the JWT token
     return {
       success: true,
       user: this.users.get("test@example.com"),
@@ -58,12 +57,10 @@ class LocalAuthProvider implements IAuthProvider {
   }
 
   async logout(token: string): Promise<void> {
-    // In a real implementation, we would invalidate the token
     console.log("User logged out");
   }
 
   private generateToken(user: IUser): string {
-    // In a real implementation, we would generate a proper JWT token
     return `token-${user.id}`;
   }
 }
@@ -76,7 +73,6 @@ class OAuthAuthProvider implements IAuthProvider {
   }
 
   async authenticate(credentials: AuthCredentials): Promise<IAuthResult> {
-    // In a real implementation, we would redirect to the OAuth provider
     console.log(`Authenticating with ${this.provider}...`);
 
     return {
@@ -92,7 +88,6 @@ class OAuthAuthProvider implements IAuthProvider {
   }
 
   async validateToken(token: string): Promise<IAuthResult> {
-    // In a real implementation, we would validate the OAuth token
     return {
       success: true,
       user: {
@@ -105,7 +100,6 @@ class OAuthAuthProvider implements IAuthProvider {
   }
 
   async logout(token: string): Promise<void> {
-    // In a real implementation, we would invalidate the OAuth token
     console.log(`Logging out from ${this.provider}...`);
   }
 }
@@ -168,14 +162,12 @@ async function main() {
     email: "test@example.com",
     password: "password123",
   });
-  console.log("Local auth result:", localResult);
 
   // Test OAuth authentication
   const oauthResult = await oauthAuthService.login({
     email: "user@example.com",
     password: "oauth-password",
   });
-  console.log("OAuth auth result:", oauthResult);
 }
 
 main().catch(console.error);
