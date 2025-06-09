@@ -26,26 +26,27 @@ class BulkPurchaseDiscount implements IDiscountStrategy {
 }
 
 // Step 3: Create a  class to apply the discount
-class DiscountContext {
-  private discountStrategy: IDiscountStrategy;
-
-  constructor(discountStrategy: IDiscountStrategy) {
-    this.discountStrategy = discountStrategy;
-  }
-
-  applyDiscount(amount: number): number {
-    return this.discountStrategy.applyDiscount(amount);
+class Discount {
+  applyDiscount(amount: number, discountStrategy: IDiscountStrategy): number {
+    return discountStrategy.applyDiscount(amount);
   }
 }
 
 // Step 4: Client Code - Dynamically choose discount strategy
 const amount = 1000;
+const discountManager = new Discount();
 
-const seasonalDiscount = new DiscountContext(new SeasonalDiscount());
-console.log(seasonalDiscount.applyDiscount(amount));
+const seasonalDiscount = discountManager.applyDiscount(
+  100,
+  new SeasonalDiscount()
+);
 
-const loyaltyDiscount = new DiscountContext(new LoyaltyDiscount());
-console.log(loyaltyDiscount.applyDiscount(amount));
+const loyaltyDiscount = discountManager.applyDiscount(
+  100,
+  new LoyaltyDiscount()
+);
 
-const bulkDiscount = new DiscountContext(new BulkPurchaseDiscount());
-console.log(bulkDiscount.applyDiscount(amount));
+const bulkDiscount = discountManager.applyDiscount(
+  100,
+  new BulkPurchaseDiscount()
+);
