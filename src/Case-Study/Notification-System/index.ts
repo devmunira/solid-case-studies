@@ -26,7 +26,7 @@ class PushNotification implements Notification {
 }
 
 class NotificationFactory {
-  static createNotification(type: string) {
+  static getNotificationService(type: string) {
     switch (type) {
       case "SMS":
         return new SMSNotification();
@@ -40,17 +40,34 @@ class NotificationFactory {
   }
 }
 
-const smsNotifier = NotificationFactory.createNotification("SMS");
-smsNotifier.send({ recipient: "+1234567890", message: "Hello via SMS!" });
+class NotificationManager {
+  sendNotification(data: NotificationContext, notificationServiceType: string) {
+    const notificationService = NotificationFactory.getNotificationService(
+      notificationServiceType
+    );
+    notificationService.send(data);
+  }
+}
 
-const emailNotifier = NotificationFactory.createNotification("Email");
-emailNotifier.send({
-  recipient: "user@example.com",
-  message: "Hello via Email!",
-});
+// const smsNotifier = NotificationFactory.createNotification("SMS");
+// smsNotifier.send({ recipient: "+1234567890", message: "Hello via SMS!" });
 
-const pushNotifier = NotificationFactory.createNotification("Push");
-pushNotifier.send({
-  recipient: "device123",
-  message: "Hello via Push Notification!",
-});
+// const emailNotifier = NotificationFactory.createNotification("Email");
+// emailNotifier.send({
+//   recipient: "user@example.com",
+//   message: "Hello via Email!",
+// });
+
+// const pushNotifier = NotificationFactory.createNotification("Push");
+// pushNotifier.send({
+//   recipient: "device123",
+//   message: "Hello via Push Notification!",
+// });
+
+const sms = new NotificationManager().sendNotification(
+  {
+    recipient: "device123",
+    message: "Hello via Push Notification!",
+  },
+  "SMS"
+);
